@@ -74,7 +74,7 @@ with open("input_18.txt") as f:
 print(sum_)
 
 
-# ### Part 2
+# Part 2
 
 
 def do_sum_first(expression):
