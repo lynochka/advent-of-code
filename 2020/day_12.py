@@ -70,7 +70,7 @@ def rotate_around_origin(coordinate, angle, decimal_number=6):
 assert [0, 2] == rotate_around_origin((2, 0), 90)
 
 
-# This should have been used instead for rotation to my opnion
+# Did not get used since waypoint position is relative to ship
 def rotate_around_point(coordinate, angle, point):
     new_coordinate = copy(list(coordinate))
     for index in range(2):
