@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 from copy import copy
 from math import prod
 
@@ -67,7 +68,6 @@ with open("input_20.txt") as f:
         tile_id = int(re.findall("\d+", lines[0])[0])
         tile_by_index[tile_id] = lines[1:]
 
-from collections import defaultdict
 
 side_map = defaultdict(set)
 
@@ -130,13 +130,16 @@ def strip_tile(tile):
 
 opposite_direction_map = {"N": "S", "S": "N", "E": "W", "W": "E"}
 
+# create a puzzle map where the with map ID to neighboring tiles in the right position, their IDs and
+# direction of the extension
 puzzle_map = defaultdict(dict)
+# start by a random corner
 corner_id = list(corners)[0]
 tile = tile_by_index[corner_id]
+# keep the list of tiles ID and the extension directions to try
 unseen_tile_ids_and_directions = list(
     map(lambda x: (corner_id, tile, x), ("N", "S", "E", "W"))
 )
-# direction means that the next tile's adjacent side is "N" or "W"
 
 while unseen_tile_ids_and_directions:
     tile_id, tile, direction = unseen_tile_ids_and_directions.pop()
@@ -165,8 +168,8 @@ while unseen_tile_ids_and_directions:
                 )
 
 
+# to create an image, find the two directions for the neigbors of the chose corner tile
 filtered_directions = puzzle_map[corner_id].keys()
-
 vertical_direction = "N" if "N" in filtered_directions else "S"
 horizontal_chunks = [(corner_id, tile_by_index[corner_id])]
 
@@ -179,10 +182,9 @@ while True:
     else:
         horizontal_chunks.append((neighbor_tile_id, neighbor_tile))
 
-horizontal_direction = "W" if "W" in filtered_directions else "E"
 
 image = []
-
+horizontal_direction = "W" if "W" in filtered_directions else "E"
 for horizontal_chunk_id, initial_tile in horizontal_chunks:
     chunk_image = strip_tile(initial_tile)
     tile_id = horizontal_chunk_id
