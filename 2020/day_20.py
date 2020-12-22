@@ -74,7 +74,6 @@ side_map = defaultdict(set)
 for index, tile in tile_by_index.items():
     for flip in (False, True):
         flipped_tile = flip_horizontal(tile) if flip else copy(tile)
-        flipped_tile = copy(tile)
         for n in range(0, 4):
             rotated = rotate_n_90(flipped_tile, n)
             for direction in ("N", "S", "W", "E"):
