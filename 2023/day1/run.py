@@ -15,6 +15,13 @@ LETTER_DIGITS = {
 REVERSED_LETTER_DIGITS = {key[::-1]: value for key, value in LETTER_DIGITS.items()}
 
 
+def read_lines_from_file(file_path):
+    with open(file_path, "r") as file:
+        for line in file:
+            line = line.strip()
+            yield line
+
+
 def read_calibration(file_path, advanced=False):
     if advanced:
         read_first_digit_ = lambda x: read_first_digit_advanced(x, LETTER_DIGITS)
@@ -25,12 +32,12 @@ def read_calibration(file_path, advanced=False):
         read_last_digit_ = lambda x: read_first_digit(x[::-1])
 
     calibration_sum = 0
-    with open(file_path, "r") as file:
-        for line in file:
-            line = line.strip()
-            if line:
-                calibration = read_first_digit_(line) + read_last_digit_(line)
-                calibration_sum += int(calibration)
+
+    for line in read_lines_from_file(file_path):
+        line = line.strip()
+        if line:
+            calibration = read_first_digit_(line) + read_last_digit_(line)
+            calibration_sum += int(calibration)
 
     return calibration_sum
 
