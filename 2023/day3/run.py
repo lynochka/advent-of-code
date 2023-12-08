@@ -1,7 +1,7 @@
-from pathlib import Path
 import re
 from functools import reduce
 from collections import defaultdict
+from pathlib import Path
 
 
 def read_lines_from_file(file_path):
